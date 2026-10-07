@@ -60,6 +60,7 @@ def benchmark_single_run(
     reranker_model: Any,
     llm_client: Any,
     top_k: int = 5,
+    profile_only: bool = False,
 ) -> Dict[str, Any]:
     timings: Dict[str, float] = {}
 
@@ -96,9 +97,14 @@ def benchmark_single_run(
     timings["4_prompt_building"] = time.perf_counter() - t0
 
     # step 5: llm invocation
-    t0 = time.perf_counter()
-    llm_response = llm_client.invoke(prompt_text)
-    timings["5_llm_generation"] = time.perf_counter() - t0
+    if not profile_only:
+        t0 = time.perf_counter()
+        llm_response = llm_client.invoke(prompt_text)
+        timings["5_llm_generation"] = time.perf_counter() - t0
+        preview = str(getattr(llm_response, "content", llm_response))[:160] + "..."
+    else:
+        timings["5_llm_generation"] = 0.0
+        preview = "[Skipped: --profile-only]"
 
     timings["total_pipeline"] = sum(timings.values())
 
@@ -107,7 +113,7 @@ def benchmark_single_run(
         "retrieved_count": len(retrieved_points),
         "reranked_count": len(top_chunks),
         "total_chunk_characters": total_chars,
-        "answer_preview": str(getattr(llm_response, "content", llm_response))[:160] + "...",
+        "answer_preview": preview,
     }
 
 
@@ -187,10 +193,26 @@ def diagnose_bottlenecks(timings: Dict[str, float], sys_info: Dict[str, str]) ->
 def main() -> None:
     parser = argparse.ArgumentParser(description="Profile latency bottlenecks in Muscle Info RAG pipeline.")
     parser.add_argument(
+        "--runs",
+        type=int,
+        default=2,
+        help="Number of runs to execute (default: 2).",
+    )
+    parser.add_argument(
         "--query",
         type=str,
         default="What are the best chest exercises according to Joe Weider?",
         help="Query to benchmark.",
+    )
+    parser.add_argument(
+        "--no-system-check",
+        action="store_true",
+        help="Skips reading system CPU and RAM stats.",
+    )
+    parser.add_argument(
+        "--profile-only",
+        action="store_true",
+        help="Measures step timings without generating full text answers.",
     )
     args = parser.parse_args()
 
@@ -199,13 +221,18 @@ def main() -> None:
     print("=" * 65)
 
     # 1. system resource check
-    sys_info = get_system_resources()
-    print("🖥️  System Environment:")
-    print(f"   - CPU Cores     : {sys_info['cpu_count']}")
-    print(f"   - Total RAM     : {sys_info['total_ram']}")
-    print(f"   - Available RAM : {sys_info['available_ram']}")
-    print(f"   - Swap Usage    : {sys_info['swap_used']}")
-    print("-" * 65)
+    if not args.no_system_check:
+        sys_info = get_system_resources()
+        print("🖥️  System Environment:")
+        print(f"   - CPU Cores     : {sys_info['cpu_count']}")
+        print(f"   - Total RAM     : {sys_info['total_ram']}")
+        print(f"   - Available RAM : {sys_info['available_ram']}")
+        print(f"   - Swap Usage    : {sys_info['swap_used']}")
+        print("-" * 65)
+    else:
+        sys_info = {"cpu_count": "skipped", "total_ram": "skipped", "available_ram": "skipped", "swap_used": "skipped"}
+        print("🖥️  System Environment: check skipped (--no-system-check)")
+        print("-" * 65)
 
     # 2. initialize models with timing
     print("⏳ Loading models into memory (cold start measurement)...")
@@ -234,18 +261,28 @@ def main() -> None:
     llm_init_time = time.perf_counter() - t0
     print(f"   - Groq Client initialized in {llm_init_time:.2f}s")
 
-    # 3. run first benchmark (cold execution)
-    print("\n🏃 Executing Run 1 (Cold Execution)...")
-    run1 = benchmark_single_run(args.query, embed_model, qdrant_client, reranker_model, llm_client)
-    print_report("Run 1 (Cold Execution)", run1)
+    # 3. run benchmark iterations
+    last_warm_run = None
+    total_runs = max(1, args.runs)
+    for run_idx in range(1, total_runs + 1):
+        label = "Cold Execution" if run_idx == 1 else "Warm Execution"
+        print(f"\n🏃 Executing Run {run_idx} ({label})...")
+        run_res = benchmark_single_run(
+            args.query,
+            embed_model,
+            qdrant_client,
+            reranker_model,
+            llm_client,
+            profile_only=args.profile_only,
+        )
+        print_report(f"Run {run_idx} ({label})", run_res)
+        if run_idx > 1:
+            last_warm_run = run_res
 
-    # 4. run second benchmark (warm execution)
-    print("🏃 Executing Run 2 (Warm Execution - Identical to subsequent user requests)...")
-    run2 = benchmark_single_run(args.query, embed_model, qdrant_client, reranker_model, llm_client)
-    print_report("Run 2 (Warm Execution)", run2)
-
-    # 5. provide bottleneck diagnosis
-    diagnose_bottlenecks(run2["timings"], sys_info)
+    # 4. provide bottleneck diagnosis on warm run (or cold run if only 1 run executed)
+    eval_run = last_warm_run or run_res
+    if not args.no_system_check:
+        diagnose_bottlenecks(eval_run["timings"], sys_info)
 
 
 if __name__ == "__main__":
