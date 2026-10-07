@@ -32,8 +32,8 @@ A Retrieval-Augmented Generation (RAG) system with a React interface that answer
 
 ```bash
 # 1. Clone and navigate to the repository
-git clone https://github.com/UzairAtiq/bodybuilding_rag.git
-cd bodybuilding_rag
+git clone https://github.com/UzairAtiq/fitness_bot.git
+cd fitness_bot
 
 # 2. Create virtual environment and install requirements
 python3 -m venv .venv

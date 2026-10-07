@@ -1,3 +1,4 @@
+from pathlib import Path
 from app.pipeline import pipeline
 import json
 import time
@@ -37,7 +38,9 @@ def run_evaluation():
 
     print("Results Written")
 
-    with open("/Users/uzair/Developer/Muscle_Info_RAG/data/evaluation/evaluate.json", "w") as f:
+    output_path = Path(__file__).resolve().parent.parent / "data" / "evaluation" / "evaluate.json"
+    output_path.parent.mkdir(parents=True, exist_ok=True)
+    with open(output_path, "w") as f:
         json.dump(results, f, indent=2)
 
     print("Evaluation complete. Results written to data/evaluation/evaluate.json")

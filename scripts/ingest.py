@@ -8,8 +8,8 @@ from app.config import collection_name
 
 book_1 = "Joe_weider_Book"
 
-#Getting the file path
-file_path = Path("/Users/uzair/Developer/Muscle_Info_RAG/data/raw/joe-weider-s-bodybuilding-system-joe-weider-2929.md")
+# Getting the file path relative to project root
+file_path = Path(__file__).resolve().parent.parent / "data" / "raw" / "joe-weider-s-bodybuilding-system-joe-weider-2929.md"
 
 #Load book as text
 loaded_book = load_book(file_path)
