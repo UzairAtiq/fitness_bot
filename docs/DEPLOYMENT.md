@@ -33,13 +33,15 @@ flowchart LR
 
 ---
 
-## Docker
+## Docker (Local / Optional)
 
-The `Dockerfile` uses a Python 3.12 slim base and downloads both model weights during the build step so containers do not download weights from Hugging Face on startup:
+> **Note**: The AWS EC2 production deployment runs directly with Uvicorn and Nginx without containers. The Docker setup in `docker/` is provided purely for optional local development and testing.
+
+The `docker/Dockerfile` uses a Python 3.12 slim base and downloads both model weights during the build step so containers do not download weights from Hugging Face on startup:
 
 ```bash
-# Build the container image
-docker build -t muscle-info-rag .
+# Build the container image from project root
+docker build -f docker/Dockerfile -t muscle-info-rag .
 
 # Run the container with your environment file
 docker run -d -p 8000:8000 --env-file .env --name fitness-bot-api muscle-info-rag
