@@ -1,6 +1,6 @@
 # Fitness Bot (Muscle Info RAG)
 
-![Fitness Bot Demo](assets/ezgif-325cdec77ae9cbb0.gif)
+![Fitness Bot Demo](assets/github.gif)
 
 The project is deployed on AWS: [Launch Fitness Bot](https://d1kipqqm1ofiqs.cloudfront.net)
 
