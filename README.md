@@ -221,15 +221,6 @@ Muscle_Info_RAG/
 
 ---
 
-## Roadmap
-
-- Table Boundary Preservation: `MarkdownHeaderTextSplitter` splits on headers rather than table boundaries. As a result, dense workout tables with exercise lists, sets, and reps can sometimes split across chunks. Formatting tables into structured text before chunking is planned.
-- Automated CI/CD: Adding a GitHub Actions workflow to build, upload to S3, and invalidate CloudFront on push.
-- Unit Test Coverage: Implementing automated tests for chunking (`test_ingestion.py`), retrieval scoring (`test_retrieval.py`), and error mocks (`test_pipeline.py`) (current test files in `tests/` contain stubs only).
-- Token Streaming: Adding Server-Sent Events (SSE) or WebSockets to stream Groq response tokens to the React frontend in real time.
-
----
-
 ## License
 
 None 
