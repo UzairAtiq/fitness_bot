@@ -14,14 +14,15 @@ flowchart LR
 ## Backend (AWS EC2)
 
 - **Host**: Ubuntu EC2 instance running Uvicorn on port 8000.
-- **Reverse Proxy**: Nginx on port 443 with Let's Encrypt TLS certificates, proxying traffic to `http://localhost:8000`.
+- **Process Manager**: Managed by `systemd` to keep the Uvicorn service running continuously and automatically restart on updates or crashes.
+- **Reverse Proxy**: Nginx on port 443 with Let's Encrypt TLS certificates, proxying traffic to `http://localhost:8000` with a 90s read timeout (`proxy_read_timeout 90s;`) to handle embedding, reranking, and LLM inference.
 - **CORS**: Configured in `app/api/routes.py` to allow requests from the CloudFront distribution domain (`https://d1kipqqm1ofiqs.cloudfront.net`) and local dev servers.
 
 ---
 
 ## Frontend (S3 + CloudFront)
 
-- **Static Hosting**: Production build (`frontend/dist/`) is stored in an S3 bucket.
+- **Static Hosting**: Production build (`frontend/dist/`) is stored in an S3 bucket (uploaded via AWS Console after `npm run build`).
 - **Global CDN**: Amazon CloudFront (`d1kipqqm1ofiqs.cloudfront.net`) distributes the static files globally.
 
 ---
