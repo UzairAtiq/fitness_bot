@@ -79,10 +79,10 @@ To maintain modularity and prevent circular dependencies, adhere to strict archi
 ## Docs
 
 - **[Documentation Index](docs/README.md)**: Master index of all backend component docs.
-- **[API Documentation](docs/api/README.md)**: REST endpoints, authentication, and CORS.
-- **[Generation Documentation](docs/generation/README.md)**: Prompt templates, guardrails, and Groq LLM inference.
-- **[Ingestion Documentation](docs/ingestion/README.md)**: Loading, cleaning, chunking, and Qdrant indexing.
-- **[Retrieval Documentation](docs/retrieval/README.md)**: Dense vector retrieval and cross-encoder reranking.
-- **[Scripts Documentation](docs/scripts/README.md)**: Batch ingestion and benchmark evaluation scripts.
-- **[Tests Documentation](docs/tests/README.md)**: Latency profiler, performance benchmarks, and unit tests.
-- **[Data Documentation](docs/data/README.md)**: Raw source documents and evaluation results.
+- **[API Documentation](docs/api.md)**: REST endpoints, authentication, and CORS.
+- **[Generation Documentation](docs/generation.md)**: Prompt templates, guardrails, and Groq LLM inference.
+- **[Ingestion Documentation](docs/ingestion.md)**: Loading, cleaning, chunking, and Qdrant indexing.
+- **[Retrieval Documentation](docs/retrieval.md)**: Dense vector retrieval and cross-encoder reranking.
+- **[Scripts Documentation](docs/scripts.md)**: Batch ingestion and benchmark evaluation scripts.
+- **[Tests Documentation](docs/tests.md)**: Latency profiler, performance benchmarks, and unit tests.
+- **[Data Documentation](docs/data.md)**: Raw source documents and evaluation results.
