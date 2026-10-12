@@ -1,8 +1,29 @@
+"""Cleans formatting artifacts and normalizes text from converted markdown documents."""
 import re
 
 def clean_text(text: str) -> str:
+    """Cleans formatting artifacts and normalizes whitespace in raw markdown text.
 
-    """Clean formatting artifacts from converted Markdown text."""
+    Steps:
+        1. Remove form-feed and page-break characters.
+        2. Remove explicit page markers such as [PAGE 23].
+        3. Remove standalone lines containing only page numbers.
+        4. Normalize Windows carriage return line endings to standard newlines.
+        5. Strip trailing whitespace from the end of each line.
+        6. Collapse three or more consecutive newlines down to double newlines.
+        7. Collapse repeated inline whitespace down to single spaces.
+        8. Standardize spacing immediately following Markdown heading markers.
+        9. Strip leading and trailing whitespace from the resulting text.
+
+    Args:
+        text: Raw text string loaded from a document.
+
+    Returns:
+        Cleaned, normalized text string suitable for chunking.
+
+    Raises:
+        None.
+    """
     # Remove form-feed/page-break characters
     text = text.replace("\f", "")
 
