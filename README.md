@@ -87,14 +87,34 @@ Details: [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md)
 
 ---
 
+## Backend
+
+FastAPI service and RAG pipeline engine providing dense vector search, cross-encoder reranking, and Groq LLM answer generation.
+
+- **Overview, Tree & Import Rules**: [backend/README.md](backend/README.md)
+- **Backend Architecture Docs**: [backend/docs/](backend/docs/README.md)
+
+---
+
+## Frontend
+
+React application providing password-gated access, conversation sessions, suggested prompts, and typewriter animations.
+
+- **Overview & Tooling**: [frontend/README.md](frontend/README.md)
+- **Frontend Architecture & Guides**: [frontend/docs/](frontend/docs/README.md)
+
+---
+
 ## Documentation
 
-- [API Reference](docs/API.md)
-- [Testing and Profiling](docs/TESTING.md)
-- [Configuration](docs/CONFIGURATION.md)
 - [Architecture](docs/ARCHITECTURE.md)
+- [API Reference](docs/API.md)
+- [Configuration](docs/CONFIGURATION.md)
+- [Testing and Profiling](docs/TESTING.md)
 - [Project Structure](docs/PROJECT_STRUCTURE.md)
 - [Deployment](docs/DEPLOYMENT.md)
+- [Backend Docs Index](backend/docs/README.md)
+- [Frontend Docs Index](frontend/docs/README.md)
 
 ---
 
