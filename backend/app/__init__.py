@@ -1,3 +1,4 @@
+"""Backend application root package and path resolution."""
 import os
 import sys
 
