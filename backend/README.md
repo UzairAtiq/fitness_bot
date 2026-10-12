@@ -73,3 +73,16 @@ To maintain modularity and prevent circular dependencies, adhere to strict archi
 - **Data Loaders, Cleaning Regex, Chunking Logic**: Add to `app/ingestion/loaders.py`, `app/ingestion/cleaner.py`, or `app/ingestion/chunker.py`.
 - **Standalone Batch Jobs or Maintenance Tasks**: Add to `scripts/`.
 - **Benchmarks, Latency Profilers, Unit Tests**: Add to `tests/`.
+
+---
+
+## Docs
+
+- **[Documentation Index](docs/README.md)**: Master index of all backend component docs.
+- **[API Documentation](docs/api/README.md)**: REST endpoints, authentication, and CORS.
+- **[Generation Documentation](docs/generation/README.md)**: Prompt templates, guardrails, and Groq LLM inference.
+- **[Ingestion Documentation](docs/ingestion/README.md)**: Loading, cleaning, chunking, and Qdrant indexing.
+- **[Retrieval Documentation](docs/retrieval/README.md)**: Dense vector retrieval and cross-encoder reranking.
+- **[Scripts Documentation](docs/scripts/README.md)**: Batch ingestion and benchmark evaluation scripts.
+- **[Tests Documentation](docs/tests/README.md)**: Latency profiler, performance benchmarks, and unit tests.
+- **[Data Documentation](docs/data/README.md)**: Raw source documents and evaluation results.
