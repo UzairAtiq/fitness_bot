@@ -1,3 +1,4 @@
+"""Loads environment variables and defines global configuration settings."""
 import os 
 from pathlib import Path
 from dotenv import load_dotenv
