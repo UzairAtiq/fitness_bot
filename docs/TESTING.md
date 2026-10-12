@@ -30,4 +30,4 @@ Outputs are written to `backend/data/evaluation/evaluate.json`, including the qu
 
 ## 3. Unit Tests
 
-> Note: Unit test files in `backend/tests/` currently contain stubs only. Full automated test coverage for chunking, retrieval scoring, and error handling is planned.
+> Note: Unit test files in `backend/tests/` currently contain stubs only. Full automated test coverage for chunking, retrieval scoring, and error handling is planned. For detailed testing documentation, see [Backend Tests Documentation](../backend/docs/tests/README.md).
