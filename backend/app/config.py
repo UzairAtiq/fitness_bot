@@ -1,7 +1,15 @@
 import os 
+from pathlib import Path
 from dotenv import load_dotenv
 
-load_dotenv()
+backend_env = Path(__file__).resolve().parent.parent / ".env"
+root_env = Path(__file__).resolve().parent.parent.parent / ".env"
+if backend_env.exists():
+    load_dotenv(backend_env)
+elif root_env.exists():
+    load_dotenv(root_env)
+else:
+    load_dotenv()
 
 QDRANT_URL = os.getenv("QDRANT_URL")
 collection_name = os.getenv("collection_name", "bodybuilding_rag")

@@ -38,16 +38,16 @@ cd fitness_bot
 # 2. Create virtual environment and install requirements
 python3 -m venv .venv
 source .venv/bin/activate
-pip install -r requirements.txt
+pip install -r backend/requirements.txt
 
 # 3. Copy environment configuration
-cp .env.example .env
+cp backend/.env.example backend/.env
 
 # 4. Ingest course material into Qdrant (one time)
-python scripts/ingest.py
+python backend/scripts/ingest.py
 
 # 5. Start the backend API
-uvicorn app.api.routes:app --reload
+cd backend && uvicorn app.api.routes:app --reload
 
 # 6. Start the frontend (in a new terminal)
 cd frontend && npm install && npm run dev
