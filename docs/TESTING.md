@@ -2,10 +2,10 @@
 
 ## 1. Latency and Resource Profiling
 
-A benchmark script is included in `tests/benchmark_pipeline.py` to measure latency across each step (MiniLM embeddings, Qdrant vector search, CrossEncoder reranking, Groq LLM call) and check CPU/RAM usage:
+A benchmark script is included in `backend/tests/benchmark_pipeline.py` to measure latency across each step (MiniLM embeddings, Qdrant vector search, CrossEncoder reranking, Groq LLM call) and check CPU/RAM usage:
 
 ```bash
-python tests/benchmark_pipeline.py --runs 3
+python backend/tests/benchmark_pipeline.py --runs 3
 ```
 
 ### Useful Flags
@@ -21,13 +21,13 @@ python tests/benchmark_pipeline.py --runs 3
 Runs 8 sample questions from different chapters of the source book through the pipeline:
 
 ```bash
-python scripts/evaluate.py
+python backend/scripts/evaluate.py
 ```
 
-Outputs are written to `data/evaluation/evaluate.json`, including the question, answer, and retrieved chunk headers with scores.
+Outputs are written to `backend/data/evaluation/evaluate.json`, including the question, answer, and retrieved chunk headers with scores.
 
 ---
 
 ## 3. Unit Tests
 
-> Note: Unit test files in `tests/` currently contain stubs only. Full automated test coverage for chunking, retrieval scoring, and error handling is planned.
+> Note: Unit test files in `backend/tests/` currently contain stubs only. Full automated test coverage for chunking, retrieval scoring, and error handling is planned.
