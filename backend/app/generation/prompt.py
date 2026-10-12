@@ -1,3 +1,4 @@
+"""Constructs domain-specific prompt templates for the LLM."""
 from langchain_core.prompts import PromptTemplate
 
 # expert prompt template with strict bodybuilding domain guardrails and structured output instructions
@@ -29,6 +30,24 @@ Question:
 Answer:"""
 
 def build_prompt(query: str, ranked_chunks: list) -> str:
+    """Builds a formatted prompt combining retrieved context and user query.
+
+    Steps:
+        1. Extract the text payload from each ranked chunk.
+        2. Join chunk texts with double newlines to form the context.
+        3. Instantiate a PromptTemplate from the bodybuilding template.
+        4. Format the template with the provided query and combined context.
+
+    Args:
+        query: User input query string.
+        ranked_chunks: List of retrieved Qdrant point objects containing text in payload.
+
+    Returns:
+        Formatted prompt string ready for LLM generation.
+
+    Raises:
+        None.
+    """
     print("Building prompt with bodybuilding domain instructions")
 
     # join retrieved context chunks into single reference string
