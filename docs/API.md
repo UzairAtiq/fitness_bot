@@ -1,6 +1,6 @@
 # API Reference
 
-The backend exposes REST endpoints built with FastAPI.
+The backend exposes REST endpoints built with FastAPI. For detailed backend routing and handler documentation, see [Backend API Documentation](../backend/docs/api/README.md).
 
 ## Endpoints
 
