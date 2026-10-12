@@ -19,7 +19,7 @@ cp backend/.env.example backend/.env
 | `GROQ_API_KEY` | Groq Cloud API key for model generation |
 | `SHARED_ACCESS_KEY` | Password required by the frontend lock screen and API |
 
-> **Local Development Note**: For local development, set `SHARED_ACCESS_KEY` in `backend/.env` to any password you want (for example, `SHARED_ACCESS_KEY=my-local-secret`). When you open the frontend, enter that same password into the access lock screen to unlock the application. For detailed configuration docs, see [Backend Environment Reference](../backend/docs/.env.example.md).
+> **Local Development Note**: For local development, set `SHARED_ACCESS_KEY` in `backend/.env` to any password you want (for example, `SHARED_ACCESS_KEY=my-local-secret`). When you open the frontend, enter that same password into the access lock screen to unlock the application. For detailed configuration docs, see [Backend Docs Index](../backend/docs/README.md).
 
 ### Optional Keys
 
