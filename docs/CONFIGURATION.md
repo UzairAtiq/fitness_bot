@@ -2,12 +2,12 @@
 
 The application uses environment variables for backend and frontend services.
 
-## Backend Configuration (`.env`)
+## Backend Configuration (`backend/.env`)
 
-Create a `.env` file in the project root:
+Create a `.env` file in the `backend/` directory:
 
 ```bash
-cp .env.example .env
+cp backend/.env.example backend/.env
 ```
 
 ### Required Keys
