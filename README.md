@@ -38,16 +38,16 @@ cd fitness_bot
 # 2. Create virtual environment and install requirements
 python3 -m venv .venv
 source .venv/bin/activate
-pip install -r requirements.txt
+pip install -r backend/requirements.txt
 
 # 3. Copy environment configuration
-cp .env.example .env
+cp backend/.env.example backend/.env
 
 # 4. Ingest course material into Qdrant (one time)
-python scripts/ingest.py
+python backend/scripts/ingest.py
 
 # 5. Start the backend API
-uvicorn app.api.routes:app --reload
+cd backend && uvicorn app.api.routes:app --reload
 
 # 6. Start the frontend (in a new terminal)
 cd frontend && npm install && npm run dev
@@ -87,14 +87,34 @@ Details: [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md)
 
 ---
 
+## Backend
+
+FastAPI service and RAG pipeline engine providing dense vector search, cross-encoder reranking, and Groq LLM answer generation.
+
+- **Overview, Tree & Import Rules**: [backend/README.md](backend/README.md)
+- **Backend Architecture Docs**: [backend/docs/](backend/docs/README.md)
+
+---
+
+## Frontend
+
+React application providing password-gated access, conversation sessions, suggested prompts, and typewriter animations.
+
+- **Overview & Tooling**: [frontend/README.md](frontend/README.md)
+- **Frontend Architecture & Guides**: [frontend/docs/](frontend/docs/README.md)
+
+---
+
 ## Documentation
 
-- [API Reference](docs/API.md)
-- [Testing and Profiling](docs/TESTING.md)
-- [Configuration](docs/CONFIGURATION.md)
 - [Architecture](docs/ARCHITECTURE.md)
+- [API Reference](docs/API.md)
+- [Configuration](docs/CONFIGURATION.md)
+- [Testing and Profiling](docs/TESTING.md)
 - [Project Structure](docs/PROJECT_STRUCTURE.md)
 - [Deployment](docs/DEPLOYMENT.md)
+- [Backend Docs Index](backend/docs/README.md)
+- [Frontend Docs Index](frontend/docs/README.md)
 
 ---
 

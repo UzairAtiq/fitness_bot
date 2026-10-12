@@ -30,3 +30,11 @@ If you are developing a production application, we recommend enabling type-aware
 ```
 
 See the [Oxlint rules documentation](https://oxc.rs/docs/guide/usage/linter/rules) for the full list of rules and categories.
+
+---
+
+## Docs
+
+- **[Frontend Documentation](docs/README.md)**: File index and overview of all configuration and source files.
+- **[Editing Guide](docs/EDITING_GUIDE.md)**: Guide on where to edit for common UI, styling, and API changes.
+- **[Component Architecture](docs/COMPONENTS.md)**: Component hierarchy and data flow breakdown.

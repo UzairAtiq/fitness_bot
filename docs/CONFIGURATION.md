@@ -2,12 +2,12 @@
 
 The application uses environment variables for backend and frontend services.
 
-## Backend Configuration (`.env`)
+## Backend Configuration (`backend/.env`)
 
-Create a `.env` file in the project root:
+Create a `.env` file in the `backend/` directory:
 
 ```bash
-cp .env.example .env
+cp backend/.env.example backend/.env
 ```
 
 ### Required Keys
@@ -19,7 +19,7 @@ cp .env.example .env
 | `GROQ_API_KEY` | Groq Cloud API key for model generation |
 | `SHARED_ACCESS_KEY` | Password required by the frontend lock screen and API |
 
-> **Local Development Note**: For local development, set `SHARED_ACCESS_KEY` in `.env` to any password you want (for example, `SHARED_ACCESS_KEY=my-local-secret`). When you open the frontend, enter that same password into the access lock screen to unlock the application.
+> **Local Development Note**: For local development, set `SHARED_ACCESS_KEY` in `backend/.env` to any password you want (for example, `SHARED_ACCESS_KEY=my-local-secret`). When you open the frontend, enter that same password into the access lock screen to unlock the application. For detailed configuration docs, see [Backend Environment Reference](../backend/docs/.env.example.md).
 
 ### Optional Keys
 

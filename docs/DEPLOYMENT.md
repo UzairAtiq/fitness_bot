@@ -16,7 +16,7 @@ flowchart LR
 - **Host**: Ubuntu EC2 instance running Uvicorn on port 8000.
 - **Process Manager**: Managed by `systemd` to keep the Uvicorn service running continuously and automatically restart on updates or crashes.
 - **Reverse Proxy**: Nginx on port 443 with Let's Encrypt TLS certificates, proxying traffic to `http://localhost:8000` with a 90s read timeout (`proxy_read_timeout 90s;`) to handle embedding, reranking, and LLM inference.
-- **CORS**: Configured in `app/api/routes.py` to allow requests from the CloudFront distribution domain (`https://d1kipqqm1ofiqs.cloudfront.net`) and local dev servers.
+- **CORS**: Configured in `backend/app/api/routes.py` to allow requests from the CloudFront distribution domain (`https://d1kipqqm1ofiqs.cloudfront.net`) and local dev servers.
 
 ---
 
@@ -45,7 +45,7 @@ The `docker/Dockerfile` uses a Python 3.12 slim base and downloads both model we
 docker build -f docker/Dockerfile -t muscle-info-rag .
 
 # Run the container with your environment file
-docker run -d -p 8000:8000 --env-file .env --name fitness-bot-api muscle-info-rag
+docker run -d -p 8000:8000 --env-file backend/.env --name fitness-bot-api muscle-info-rag
 ```
 
 Check that the container is responding:
