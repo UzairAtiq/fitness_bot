@@ -108,7 +108,7 @@ React application providing password-gated access, conversation sessions, sugges
 ## Documentation
 
 - [Architecture](docs/ARCHITECTURE.md)
-- [API Reference](docs/API.md)
+- [API Reference](backend/docs/api/README.md)
 - [Configuration](docs/CONFIGURATION.md)
 - [Testing and Profiling](docs/TESTING.md)
 - [Project Structure](docs/PROJECT_STRUCTURE.md)

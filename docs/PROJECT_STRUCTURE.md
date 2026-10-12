@@ -42,7 +42,6 @@ Muscle_Info_RAG/
 │   ├── Dockerfile                    # Container configuration with pre-cached models
 │   └── docker-compose.yml            # Local container orchestration
 ├── docs/
-│   ├── API.md                        # REST API endpoints and schemas
 │   ├── ARCHITECTURE.md               # System architecture and RAG pipeline flow
 │   ├── CONFIGURATION.md              # Environment variables and configuration
 │   ├── DEPLOYMENT.md                 # AWS production and local Docker deployment
