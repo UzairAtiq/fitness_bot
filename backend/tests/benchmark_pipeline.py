@@ -1,3 +1,4 @@
+"""Profiles latency and resource consumption across RAG pipeline stages."""
 import argparse
 import os
 import sys
@@ -15,6 +16,23 @@ from app.generation.prompt import build_prompt
 
 
 def get_system_resources() -> Dict[str, str]:
+    """Collects host CPU core count, RAM capacity, available RAM, and swap memory statistics.
+
+    Steps:
+        1. Initialize default stats dictionary with unknown fallback values.
+        2. Attempt to query system memory and swap usage via psutil if installed.
+        3. If psutil is missing, fallback to reading /proc/meminfo on Linux platforms.
+        4. Return dictionary of gathered resource statistics.
+
+    Args:
+        None.
+
+    Returns:
+        Dict[str, str]: Mapping of resource names to formatted string values.
+
+    Raises:
+        None.
+    """
     # collect system cpu and memory stats for diagnostics
     stats = {
         "cpu_count": str(os.cpu_count() or "unknown"),
@@ -62,6 +80,31 @@ def benchmark_single_run(
     top_k: int = 5,
     profile_only: bool = False,
 ) -> Dict[str, Any]:
+    """Measures execution latency across each pipeline component for a test query.
+
+    Steps:
+        1. Measure query vector embedding calculation latency.
+        2. Measure Qdrant vector similarity retrieval latency for candidate points.
+        3. Measure cross-encoder reranker prediction latency and select top 2 points.
+        4. Measure prompt template construction latency.
+        5. Measure Groq LLM inference latency if profile_only is False.
+        6. Compute cumulative latency and compile results summary dictionary.
+
+    Args:
+        query: Test query string.
+        embed_model: SentenceTransformer embedding model.
+        qdrant_client: QdrantClient instance.
+        reranker_model: CrossEncoder reranker model.
+        llm_client: ChatGroq client instance.
+        top_k: Number of candidate points to retrieve (default: 5).
+        profile_only: If True, bypass LLM invocation to measure vector steps (default: False).
+
+    Returns:
+        Dict[str, Any]: Timings breakdown, chunk counts, character sizes, and answer preview.
+
+    Raises:
+        Exception: If any pipeline stage encounters an unhandled runtime error.
+    """
     timings: Dict[str, float] = {}
 
     # step 1: embed query
@@ -118,6 +161,25 @@ def benchmark_single_run(
 
 
 def print_report(run_name: str, result: Dict[str, Any]) -> None:
+    """Formats and prints pipeline benchmark results in a structured terminal table.
+
+    Steps:
+        1. Extract latency timings and calculate total elapsed pipeline time.
+        2. Print header banner with run name, retrieved chunks count, and token estimate.
+        3. Iterate through each pipeline stage, printing latency and percentage share.
+        4. Append bottleneck warning indicator if stage exceeds 10 seconds.
+        5. Print total elapsed time and LLM answer text preview.
+
+    Args:
+        run_name: Iteration label or descriptive title for this benchmark run.
+        result: Metrics dictionary produced by benchmark_single_run.
+
+    Returns:
+        None.
+
+    Raises:
+        None.
+    """
     timings = result["timings"]
     total = timings["total_pipeline"]
 
@@ -151,6 +213,25 @@ def print_report(run_name: str, result: Dict[str, Any]) -> None:
 
 
 def diagnose_bottlenecks(timings: Dict[str, float], sys_info: Dict[str, str]) -> None:
+    """Evaluates latency distribution to diagnose primary bottlenecks and recommend fixes.
+
+    Steps:
+        1. Extract reranker, LLM, and vector search durations from timings dictionary.
+        2. Print diagnostic analysis header.
+        3. If total latency is under 5 seconds, report normal healthy performance and return.
+        4. Identify if reranking, LLM generation, or Qdrant search constitutes a bottleneck.
+        5. Provide concrete remediation instructions based on hardware specifications.
+
+    Args:
+        timings: Dictionary of stage execution timings in seconds.
+        sys_info: Dictionary containing host CPU and memory hardware diagnostics.
+
+    Returns:
+        None.
+
+    Raises:
+        None.
+    """
     rerank_time = timings.get("3_reranker_inference", 0.0)
     llm_time = timings.get("5_llm_generation", 0.0)
     qdrant_time = timings.get("2_qdrant_retrieval", 0.0)
@@ -191,6 +272,24 @@ def diagnose_bottlenecks(timings: Dict[str, float], sys_info: Dict[str, str]) ->
 
 
 def main() -> None:
+    """Parses command-line arguments and runs benchmark profiler and diagnostic report.
+
+    Steps:
+        1. Parse CLI options for runs, custom query, and profiling modes.
+        2. Query system resources unless skipped via flag.
+        3. Load embedding, vector database client, cross-encoder, and LLM instances with timing.
+        4. Execute requested number of benchmark runs and print results table.
+        5. Run bottleneck diagnostics on warm run performance metrics.
+
+    Args:
+        None.
+
+    Returns:
+        None.
+
+    Raises:
+        Exception: If model initialization or benchmark execution encounters an unhandled error.
+    """
     parser = argparse.ArgumentParser(description="Profile latency bottlenecks in Muscle Info RAG pipeline.")
     parser.add_argument(
         "--runs",
