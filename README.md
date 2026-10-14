@@ -2,7 +2,7 @@
 
 ![Fitness Bot Demo](assets/github.gif)
 
-The project is deployed on AWS: [Launch Fitness Bot](https://d1kipqqm1ofiqs.cloudfront.net)
+The project is deployed on AWS: [Launch Fitness Bot](https://fitnessbot.uzairatiq.app)
 
 > Note: Access is password-protected to prevent unauthorized API use and stay within Groq and Qdrant Cloud free-tier rate limits.
 >
