@@ -13,6 +13,7 @@ app = FastAPI(title="Fitness Bot API")
 # configure cors to allow requests from cloudfront and local dev servers
 origins = [
     "https://d1kipqqm1ofiqs.cloudfront.net",
+    "https://fitnessbot.uzairatiq.app",
     "http://localhost:5173",
     "http://127.0.0.1:5173",
 ]
